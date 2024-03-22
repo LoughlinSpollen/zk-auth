@@ -1,0 +1,69 @@
+version: '3.8'
+services:
+  auth-db:
+    image: postgres:alpine
+    restart: always
+    ports:
+      - "5432:5432"
+    environment:
+      - ZK_AUTH_DB_NAME=${ZK_AUTH_DB_NAME}
+      - ZK_AUTH_DB_ADMIN=${ZK_AUTH_DB_ADMIN}
+      - ZK_AUTH_DB_ADMIN_PASSWORD=${ZK_AUTH_DB_ADMIN_PASSWORD}
+      - ZK_AUTH_DB_USER=${ZK_AUTH_DB_USER}
+      - ZK_AUTH_DB_PASSWORD=${ZK_AUTH_DB_PASSWORD}
+      - PGSSLMODE=${PGSSLMODE}
+      - POSTGRES_DEBUG=${POSTGRES_DEBUG}
+      - POSTGRES_PASSWORD=${ZK_AUTH_DB_ADMIN}
+    volumes:
+      - ./database/scripts/setup:/docker-entrypoint-initdb.d/
+      - postgres_data:/var/lib/postgresql/data/
+    healthcheck:
+      test: pg_isready -p 5432 -d ${ZK_AUTH_DB_NAME} -U ${ZK_AUTH_DB_ADMIN}
+      interval: 30s
+      timeout: 30s
+      retries: 5
+    networks:
+      - auth-network
+
+  auth-service:
+    build:
+      context: .
+      dockerfile: zk-auth-service.Dockerfile
+    restart: always
+    ports:
+      - "1025:1025"
+    environment:
+      - DB_DEBUG=true
+      - ZK_AUTH_DB_NAME=${ZK_AUTH_DB_NAME}
+      - ZK_AUTH_DB_USER=${ZK_AUTH_DB_USER}
+      - ZK_AUTH_DB_PASSWORD=${ZK_AUTH_DB_PASSWORD}
+      - PGHOST=auth-db
+      - PGPORT=${PGPORT}
+      - PGSSLMODE=disable
+      - POSTGRES_DEBUG=${POSTGRES_DEBUG}
+      - SERVICE_PORT=${SERVICE_PORT}
+      - ZK_CPD_Q=${ZK_CPD_Q}
+      - ZK_CPD_G=${ZK_CPD_G}
+      - ZK_CPD_A=${ZK_CPD_A}
+      - ZK_CPD_B=${ZK_CPD_B}
+
+    networks:
+      - auth-network
+
+  zk-client:
+    build:
+      context: .
+      dockerfile: zk-client.Dockerfile
+    restart: always
+    environment:
+      - DEBUG=${DEBUG}
+    networks:
+      - auth-network
+
+volumes:
+  postgres_data:
+
+networks:
+  auth-network:
+      name: auth-network
+

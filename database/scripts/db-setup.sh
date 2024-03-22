@@ -1,6 +1,6 @@
 #! /usr/bin/env sh
 
-source ./scripts/db-config.sh
+./scripts/db-config.sh
 
 echo "database ${ZK_AUTH_DB_NAME} setup starting"
 sleep 2s # Waits 2 seconds.

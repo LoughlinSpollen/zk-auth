@@ -62,12 +62,10 @@ else
     exec $SHELL -l
 fi
 
-go mod init github.com/LoughlinSpollen/zk_auth_service
+go mod init zk_auth_service
 
 echo "Installing ginkgo for testing"
 go install -mod=mod github.com/onsi/ginkgo/v2/ginkgo@latest
 
-go mod init
 go mod tidy
 go mod download
-go mod verify

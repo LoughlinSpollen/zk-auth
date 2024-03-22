@@ -1,6 +1,6 @@
 #! /usr/bin/env sh
 
-. ./scripts/db-config.sh
+./scripts/db-config.sh
 
 rm -rf $POSTGRES_DATA
 mkdir -p $POSTGRES_DATA

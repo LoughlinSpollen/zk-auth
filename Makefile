@@ -1,4 +1,4 @@
-.PHONY: run-servers stop-servers 
+.PHONY: run-servers stop-servers docker-build docker-clean compose-up compose-down install-dev
 
 run-servers:
 	@scripts/run-servers.sh
@@ -6,3 +6,17 @@ run-servers:
 stop-servers:
 	@scripts/stop-servers.sh
 
+docker-build:
+	@scripts/docker-build.sh
+
+docker-clean:
+	@scripts/docker-clean.sh
+
+compose-up:
+	@scripts/docker-compose.sh
+
+compose-down:
+	docker-compose -f docker-compose.yml -f docker-compose.test.yml down -v
+
+install-dev:
+	@scripts/install-dev.sh

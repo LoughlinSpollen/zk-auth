@@ -1,5 +1,5 @@
 #! /usr/bin/env sh
-. ./scripts/db-config.sh
+./scripts/db-config.sh
 
 FILE=$POSTGRES_DATA/postmaster.pid
 echo "Database location: " $FILE

@@ -1,7 +1,8 @@
 #! /usr/bin/env sh
 
+echo "test"
 # setup the database
-source ../database/scripts/db-config.sh
+. ../database/scripts/db-config.sh
 
 echo "starting database"
 cd ../database
@@ -11,44 +12,23 @@ cd ../database
 ./scripts/db-setup.sh
 ./scripts/db-init.sh
 ./scripts/db-truncate.sh
-cd ../auth_service
+
+echo "starting server"
+cd ../zk_auth_service
+./scripts/build.sh
+./build/auth_service &
+cd ..
 
 echo "Unit and integration tests"
-ginkgo -timeout=60s -r -v -cover -coverprofile=coverage.out -coverpkg=./... --output-dir=../test-results
+rm -rf ../test-results
+mkdir ../test-results
+ginkgo -timeout=60s -r -v --output-dir=../test-results
 
-# echo "staring services for integration tests"
 
-# echo "starting federation_server"
-# cd ../federation_server/
-# python main.py &
-
-# echo "starting mpc_service"
-# eval cd ../mpc_service/
-# python main.py &
-
-# echo "starting exchange_server"
-# eval cd ../exchange_server/
-# python main.py &
-
-# echo "starting ml_service"
-# eval cd ../ml_service/
-# python main.py &
-
-# cd ../auth_service
-
-# echo "Integration tests"
-# go test ./test/integration -v -count=1 
-
-# echo "stopping services after integration tests"
-
-# kill -9 $(lsof -ti tcp:1025) 
-# kill -9 $(lsof -ti tcp:1026) 
-# kill -9 $(lsof -ti tcp:1027) 
-# kill -9 $(lsof -ti tcp:1028) 
 cd ../database
 ./scripts/db-stop.sh
+cd ..
 
-cd ../auth_service
-
+lsof -ti:$SERVICE_PORT | xargs kill
 echo "Tests complete"
 

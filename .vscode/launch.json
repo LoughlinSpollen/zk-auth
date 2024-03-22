@@ -1,0 +1,23 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+        {
+			"name": "zk_auth_service",
+			"type": "go",
+			"request": "launch",
+            "mode": "auto",
+            "cwd": "${workspaceFolder}/zk_auth_service",
+			"program": "${workspaceRoot}/zk_auth_service/main.go",
+			"env": {},
+			"args": []
+        },
+        {
+            "name": "zk_client",
+            "type": "python",
+            "request": "launch",
+            "cwd": "${workspaceFolder}/zk_client",
+            "program": "${workspaceFolder}/zk_client/main.py",
+            "console": "integratedTerminal",
+        },        
+    ]
+}

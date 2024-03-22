@@ -35,6 +35,7 @@ var _ = Describe("Auth server entry points", func() {
 		authUsecase usecase.AuthUsecase
 		conn        *grpc.ClientConn
 		client      pb.AuthClient
+		authID      string
 	)
 
 	Describe("auth registeration gRPC end-point", func() {
@@ -157,6 +158,13 @@ var _ = Describe("Auth server entry points", func() {
 				conn, err = grpc.Dial(address, grpc.WithTransportCredentials(insecure.NewCredentials()))
 				Expect(err).ShouldNot(HaveOccurred())
 				client = pb.NewAuthClient(conn)
+
+				ctx := context.Background()
+				response, err := client.CreateAuthenticationChallenge(ctx, &pb.AuthenticationChallengeRequest{
+					User: "username",
+				})
+				Expect(err).ShouldNot(HaveOccurred())
+				authID = response.GetAuthId()
 			})
 
 			AfterEach(func() {
@@ -167,7 +175,7 @@ var _ = Describe("Auth server entry points", func() {
 			It("successfully verified a user", func() {
 				ctx := context.Background()
 				response, err := client.VerifyAuthentication(ctx, &pb.AuthenticationAnswerRequest{
-					AuthId: "d3f4b0c4-3c2d-4b4b-8c3d-8d4b1b4c3d2b",
+					AuthId: authID,
 					S:      1234567890,
 				})
 				Expect(err).ShouldNot(HaveOccurred())

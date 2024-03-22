@@ -1,4 +1,4 @@
-.PHONY: all test lint build run watch install-dev
+.PHONY: build lint run watch test install-dev
 .DEFAULT_GOAL := run
 SHELL         := /bin/bash
 

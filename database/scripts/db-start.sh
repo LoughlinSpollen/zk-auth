@@ -1,6 +1,6 @@
 #! /usr/bin/env sh
 
-. ./scripts/db-config.sh 
+./scripts/db-config.sh 
 sleep 3
 
 FILE=$POSTGRES_DATA/postmaster.pid

@@ -2,7 +2,7 @@
 
 pwd
 cd zk_auth_service/
-. ./scripts/config.sh
+./scripts/config.sh
 lsof -ti:$SERVICE_PORT | xargs kill
 cd ..
 

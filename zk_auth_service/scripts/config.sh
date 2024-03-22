@@ -1,7 +1,7 @@
 #! /usr/bin/env sh
 
 cd ../database
-. ./scripts/db-config.sh
+./scripts/db-config.sh
 cd ../zk_auth_service
 export PGPORT=5432
 export PGHOST="0.0.0.0"

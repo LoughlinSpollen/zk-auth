@@ -2,7 +2,7 @@
 
 sleep 1s
 cd zk_auth_service/
-. ./scripts/config.sh
+./scripts/config.sh
 cd ..
 lsof -ti:$SERVICE_PORT | xargs kill
 sleep 1s
