@@ -46,7 +46,6 @@ services:
       - ZK_CPD_G=${ZK_CPD_G}
       - ZK_CPD_A=${ZK_CPD_A}
       - ZK_CPD_B=${ZK_CPD_B}
-
     networks:
       - auth-network
 
@@ -54,9 +53,15 @@ services:
     build:
       context: .
       dockerfile: zk-client.Dockerfile
-    restart: always
+    restart: on-failure
     environment:
       - DEBUG=${DEBUG}
+      - ZK_AUTH_SERVICE_HOST=auth-service
+      - ZK_AUTH_SERVICE_PORT=${ZK_AUTH_SERVICE_PORT}
+      - ZK_AUTH_SERVICE_INITIAL_BACKOFF=${ZK_AUTH_SERVICE_INITIAL_BACKOFF}
+      - ZK_AUTH_SERVICE_MAX_BACKOFF=${ZK_AUTH_SERVICE_MAX_BACKOFF}
+      - ZK_AUTH_SERVICE_MAX_RETRIES=${ZK_AUTH_SERVICE_MAX_RETRIES}
+      - ZK_AUTH_SERVICE_BACKOFF_MULTIPLIER=${ZK_AUTH_SERVICE_BACKOFF_MULTIPLIER}
     networks:
       - auth-network
 

@@ -16,7 +16,8 @@ compose-up:
 	@scripts/docker-compose.sh
 
 compose-down:
-	docker-compose -f docker-compose.yml -f docker-compose.test.yml down -v
+	docker-compose -f docker-compose.yml -f down -v
+	docker-compose down --volumes
 
 install-dev:
 	@scripts/install-dev.sh

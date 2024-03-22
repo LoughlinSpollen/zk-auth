@@ -39,5 +39,7 @@ echo "ZK_CPD_B=${ZK_CPD_Q}" >> .env
 cat ./zk_client/.env >> .env
 
 echo "building docker image"
-docker-compose -f docker-compose.yml build
+
+docker volume prune -f  
+docker-compose up
 

@@ -12,11 +12,12 @@ This is a zk authenication service and client spike.
 
 ## Run
 
-* Run from `make run`
+* Run from `make run` or `make test` within the top level directories.
+* The server `make test` outputs some coverage metrics. It's about 80% which is fine. Testing is a law of demishing returns.
 
 ## Background
 
-* As a Spike that will grow into a product. It is a mono-repo with with isolated services that will eventually graduate to their own repo, so it's isolated in this fashion but with a common architecture. The common pattern across client and services hopefully makes it easier to follow.
+* As a Spike that will grow into a product, it is a mono-repo with with isolated services that will eventually graduate to their own repo, so it's isolated in this fashion but with a common architecture. The common pattern across client and services hopefully makes it easier to follow.
 
 * This spike adapts the `Chaum–Pedersen Protocol` to support 1-factor authentication, that is, the exact matching of a number (registration password) stored during registration and another number (login password) generated during the login process.
 
@@ -29,4 +30,4 @@ This is a zk authenication service and client spike.
 * This implements ZK Proof auth client, server and persistnece system.
 * The `make` commands work.
 * Run the `make run-servers` from the root.
-* The docker images build, I haven't had a chance to check if the `docker-compose` actually works.
+* The docker images are buiding. The `docker-compose` works too. Check out the associated `make` commands to ease automation: `make compose-up`and `make compose-down`. It's probably best to use these commands to ensure volumes are pruned and the shared lib is included in the build.
