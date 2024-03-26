@@ -17,8 +17,6 @@ This is a zk authenication service and client spike.
 
 ## Background
 
-* As a Spike that will grow into a product, it is a mono-repo with with isolated services that will eventually graduate to their own repo, so it's isolated in this fashion but with a common architecture. The common pattern across client and services hopefully makes it easier to follow.
-
 * This spike adapts the `Chaum–Pedersen Protocol` to support 1-factor authentication, that is, the exact matching of a number (registration password) stored during registration and another number (login password) generated during the login process.
 
 ### Layout
